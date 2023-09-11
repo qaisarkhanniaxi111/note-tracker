@@ -17,7 +17,7 @@ class LocationController extends Controller
      */
     public function index(Request $request)
     {
-        $clinicians = User::clinicians()->get();
+        $clinicians = User::clinicians()->active()->get();
         $locations = Location::with(['clinicians'])->get();
 
         if ($request->ajax()) {

@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    public const REDIRECT_TO = 'admin/dashboard';
+    public const REDIRECT_TO = 'admin/notes';
 
     protected $redirectTo = self::REDIRECT_TO;
 

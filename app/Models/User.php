@@ -56,8 +56,25 @@ class User extends Authenticatable
         $builder->where('role', User::CLINICIAN);
     }
 
+    public function scopeActive(Builder $builder)
+    {
+        $builder->whereNotNull('email_verified_at');
+    }
+
     public function locations()
     {
         return $this->belongsToMany(Location::class, 'clinician_location', 'location_id', 'clinician_id');
     }
+
+    public function isAdmin()
+    {
+        $isAdmin = false;
+
+        if (auth()->check()) {
+            if (auth()->user()->role === User::ADMIN) {
+                return $isAdmin = true;
+            }
+        }
+    }
+
 }

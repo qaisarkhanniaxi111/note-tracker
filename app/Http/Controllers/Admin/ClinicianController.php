@@ -149,7 +149,7 @@ class ClinicianController extends Controller
             'clinician' => [
                 'name' => $clinician->name,
                 'email' => $clinician->email,
-                'status' => $clinician->status == 1 ? '<span class="badge badge-success">Yes</span>': '<span class="badge badge-danger">No</span>' ,
+                'status' => $clinician->status == 1 ? '<span class="badge badge-success"><i class="fa-solid fa-check"></i></span>': '<span class="badge badge-danger"><i class="fas fa-ban"></i></span>' ,
             ]
         ], 201);
     }

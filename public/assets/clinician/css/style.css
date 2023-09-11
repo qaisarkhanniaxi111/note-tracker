@@ -1,0 +1,11 @@
+.imga {
+    width: 80px;
+    height: 65px
+  }
+  .active {
+      background: #3025BC;
+      color: white !important;
+  }
+  .active a {
+      color: white !important;
+  }

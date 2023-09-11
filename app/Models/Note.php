@@ -36,9 +36,4 @@ class Note extends Model
         return $this->belongsTo(ErrorType::class);
     }
 
-    public function status()
-    {
-        return $this->belongsTo(NoteStatus::class);
-    }
-
 }

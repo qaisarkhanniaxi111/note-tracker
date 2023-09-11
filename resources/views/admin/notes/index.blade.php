@@ -22,7 +22,7 @@
                 <div class="row">
                   <div class="col-sm">
                     <select name="location" id="location" class="form-control">
-                        <option value="" disabled selected>Choose Location</option>
+                        <option value="" selected>Choose Location</option>
                         @foreach ($locations as $location)
                             <option value="{{ $location->id }}">{{ $location->name }}</option>
                         @endforeach
@@ -30,7 +30,7 @@
                   </div>
                   <div class="col-sm">
                     <select name="clinician" id="clinician" class="form-control">
-                        <option value="" disabled selected>Choose Clinician</option>
+                        <option value="" selected>Choose Clinician</option>
                         @foreach ($clinicians as $clinician)
                             <option value="{{ $clinician->id }}">{{ $clinician->name }}</option>
                         @endforeach
@@ -38,20 +38,24 @@
                   </div>
                   <div class="col-sm">
                     <select name="status" id="status" class="form-control">
-                        <option value="" disabled selected>Choose Status</option>
+                        <option value="" selected>Choose Status</option>
                         <option value="{{ \App\Models\Note::NOT_FIXED }}">Not Fixed</option>
                         <option value="{{ \App\Models\Note::FIXED }}">Fixed</option>
                         <option value="{{ \App\Models\Note::CONTACT_ME }}">Contact me</option>
                         <option value="{{ \App\Models\Note::UNFOUNDED }}">Unfounded</option>
                     </select>
                   </div>
+
+                  <div class="col-sm">
+                    <button id="remove_filter_btn" class="btn btn-default" style="background: #F1F5FB">Remove Filters</button>
+                  </div>
+
                 </div>
               </div>
 
             <div class="table-responsive">
             <table id="notes-table" class="table mt-3 table-striped text-center" style="width:100%">
                 <thead>
-                    <th>#</th>
                     <th>Location</th>
                     <th>Clinician</th>
                     <th>Patient</th>
@@ -88,19 +92,19 @@
             ajax: {
                 url: "{{ route('admin.notes.index') }}",
                 data: function (d) {
+
                     d.location = $('#location').val(),
                     d.clinician = $('#clinician').val(),
                     d.status = $('#status').val()
                 }
             },
             columns: [
-                {data: 'checkbox'},
                 {data: 'location'},
                 {data: 'clinician'},
                 {data: 'patient'},
                 {data: 'error_type'},
                 {data: 'date_of_service'},
-                {data: 'status'},
+                {data: 'status', name: 'status', orderable: false, searchable: false},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
@@ -108,6 +112,21 @@
         $('#location, #clinician, #status').change(function() {
             table.draw();
         });
+
+        $('#remove_filter_btn').click(function() {
+
+            $("#location option:selected").prop("selected", false);
+            $("#clinician option:selected").prop("selected", false);
+            $("#status option:selected").prop("selected", false);
+
+            // $('#location').val('');
+            // $('#clinician').val('');
+            // $('#status').val('');
+
+            table.draw();
+        });
+
+
 
         // Deleting Post
         $('body').on('click', '.deleteButton', function () {

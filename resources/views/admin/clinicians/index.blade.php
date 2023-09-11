@@ -44,8 +44,8 @@
                                 <label>Status</label> <span class="star-color">*</span>
                                 <select name="status" id="status" class="form-control" required>
                                     <option value="" disabled selected>Choose Option</option>
-                                    <option value="0">No</option>
-                                    <option value="1">Yes</option>
+                                    <option value="0">Disabled</option>
+                                    <option value="1">Active</option>
                                 </select>
                                 <span id="statusError" class="error_msgs text-danger"></span>
                             </div>

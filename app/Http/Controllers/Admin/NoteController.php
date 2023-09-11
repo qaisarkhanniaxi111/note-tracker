@@ -39,14 +39,19 @@ class NoteController extends Controller
                 $notes->where('status', $request->status);
             }
 
+            elseif ($request->status === null) {
+                $notes;
+            }
+
+            elseif ($request->status == Note::NOT_FIXED) {
+                $notes->where('status', $request->status);
+            }
+
             $notes->get();
 
             return Datatables::of($notes)
                 ->addIndexColumn()
 
-                ->addColumn('checkbox', function($row){
-                    return '<input type="checkbox" value="'.$row->id.'">';
-                })
                 ->addColumn('location', function($row){
                     $locationName = null;
 
