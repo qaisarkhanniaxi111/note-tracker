@@ -21,33 +21,31 @@ class NoteController extends Controller
     public function index(Request $request)
     {
         $locations = Location::with(['clinicians'])->get();
-        $clinicians = User::with(['locations'])->clinicians()->get();
+        $clinicians = User::with(['locations'])->clinicians()->active()->get();
 
-        $notes = Note::query()->with(['location', 'clinician', 'patient', 'errorType']);
+        $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->get();
 
         if ($request->ajax()) {
 
             if ($request->location) {
-                $notes->where('location_id', $request->location);
+                $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->where('location_id', $request->location)->get();
             }
 
             if ($request->clinician) {
-                $notes->where('clinician_id', $request->clinician);
+                $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->where('clinician_id', $request->clinician)->get();
             }
 
             if ($request->status) {
-                $notes->where('status', $request->status);
+                $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->where('status', $request->status)->get();
             }
 
             elseif ($request->status === null) {
-                $notes;
+                $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->get();
             }
 
             elseif ($request->status == Note::NOT_FIXED) {
-                $notes->where('status', $request->status);
+                $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->where('status', $request->status)->get();
             }
-
-            $notes->get();
 
             return Datatables::of($notes)
                 ->addIndexColumn()
@@ -109,7 +107,7 @@ class NoteController extends Controller
                     <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" title="Delete" class="btn btn-sm btn-danger del deleteButton"> <i class="fas fa-trash"></i> </a>';
                     return $btn;
                 })
-                ->rawColumns(['action', 'status', 'checkbox'])
+                ->rawColumns(['action', 'status'])
                 ->make(true);
         }
 

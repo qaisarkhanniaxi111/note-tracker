@@ -31,19 +31,18 @@ class LocationController extends Controller
                     return Str::limit($row->email, 20);
                 })
                 ->addColumn('status', function($row){
-                    $status = null;
 
                     if ($row->status == Location::NO) {
 
-                        $status = '<label class="switch switch-text switch-outline-alt-primary switch-pill form-control-label mr-2">
+                        $status = '<label data-id="'.$row->id.'" class="switch-off switch switch-text switch-outline-alt-primary switch-pill form-control-label mr-2">
                                         <input type="checkbox" class="switch-input form-check-input" value="Off">
                                         <span class="switch-label" data-on="On" data-off="Off"></span>
                                         <span class="switch-handle"></span>
                                     </label>';
                     }
                     else if ($row->status == Location::YES) {
-                        $status = '<label class="switch switch-text switch-outline-alt-primary switch-pill form-control-label mr-2">
-                                        <input type="checkbox" class="switch-input form-check-input" value="On" checked="">
+                        $status = '<label data-id="'.$row->id.'" class="switch-on switch switch-text switch-outline-alt-primary switch-pill form-control-label mr-2">
+                                        <input type="checkbox" class="switch-input form-check-input" value="On" checked="checked">
                                         <span class="switch-label" data-on="On" data-off="Off"></span>
                                         <span class="switch-handle"></span>
                                     </label>';
@@ -235,6 +234,33 @@ class LocationController extends Controller
 
         return response()->json([
             'message' => 'Location removed successfully'
+        ], 201);
+    }
+
+    public function changeLocationStatus(Request $request, $locationId)
+    {
+        $location = Location::find($locationId);
+
+        if (! $location) {
+            return response()->json([
+                'error' => config('error.404_show')
+            ], 404);
+        }
+
+        try {
+
+            $location->update([
+                'status' => $request->status
+            ]);
+        }
+        catch(\Exception $ex) {
+            return response()->json([
+                'error' => 'Something went wrong, the error is '. $ex->getMessage()
+            ], 401);
+        }
+
+        return response()->json([
+            'message' => 'Location report sent successfully'
         ], 201);
     }
 }

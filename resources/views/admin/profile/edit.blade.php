@@ -27,7 +27,7 @@
                     </div>
                 @endif
 
-              <form method="post" action="{{ route('admin.profile.update') }}">
+              <form method="post" action="{{ route('admin.profile.update', $user ? $user->id: '') }}">
                 @csrf
                 <div class="row mb-2">
                   <div class="col-lg-6">

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ErrorTypeController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\NoteController;
+use App\Http\Controllers\Clinician\NoteController as ClinicianNoteController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Clinician\DashboardController as ClinicianDashboardController;
 use Illuminate\Support\Facades\Auth;
@@ -21,22 +22,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('site.home');
+Route::view('/', 'welcome')->name('site.home');
 
-Route::get('/dashboard', function () {
-    return view('admin.dashboard');
-})->name('dashboard');
+Auth::routes([
+    'verify' => true
+]);
 
-Auth::routes();
-
-Route::middleware('auth')->group(function() {
+Route::middleware(['auth', 'verified'])->group(function() {
 
     Route::prefix('admin')->as('admin.')->middleware(['isAdmin'])->group(function() {
         Route::get('profile/edit', [DashboardController::class, 'editProfile'])->name('profile.edit');
-        Route::post('profile/update', [DashboardController::class, 'updateProfile'])->name('profile.update');
+        Route::post('profile/update/{id}', [DashboardController::class, 'updateProfile'])->name('profile.update');
 
+        Route::get('locations/{location_id}/status', [LocationController::class, 'changeLocationStatus'])->name('locations.status');
         Route::resource('locations', LocationController::class)->except('create', 'update');
         Route::resource('clinicians', ClinicianController::class)->except('create', 'update');
         Route::resource('error_types', ErrorTypeController::class)->except('create', 'update');
@@ -48,9 +46,9 @@ Route::middleware('auth')->group(function() {
     Route::prefix('clinician')->as('clinician.')->group(function() {
         Route::get('/dashboard', [ClinicianDashboardController::class, 'dashboard'])->name('dashboard');
 
-        Route::get('profile/edit', [DashboardController::class, 'editProfile'])->name('profile.edit');
-        Route::post('profile/update', [DashboardController::class, 'updateProfile'])->name('profile.update');
-        // Route::resource('notes', NoteController::class);
+        Route::get('profile/edit', [ClinicianDashboardController::class, 'editProfile'])->name('profile.edit');
+        Route::post('profile/update/{id}', [ClinicianDashboardController::class, 'updateProfile'])->name('profile.update');
+        Route::resource('notes', ClinicianNoteController::class)->only('index', 'edit', 'store');
     });
 
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');

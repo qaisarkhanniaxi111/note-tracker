@@ -4,13 +4,14 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -51,6 +52,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function scopeAdmins(Builder $builder)
+    {
+        $builder->where('role', User::ADMIN);
+    }
+
     public function scopeClinicians(Builder $builder)
     {
         $builder->where('role', User::CLINICIAN);
@@ -64,6 +70,11 @@ class User extends Authenticatable
     public function locations()
     {
         return $this->belongsToMany(Location::class, 'clinician_location', 'location_id', 'clinician_id');
+    }
+
+    public function notes()
+    {
+        return $this->hasMany(Note::class, 'clinician_id', 'id');
     }
 
     public function isAdmin()

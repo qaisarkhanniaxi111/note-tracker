@@ -377,6 +377,76 @@
             $("#status option").attr("selected", false);
         });
 
+        // Location change status
+        $('body').on('click','.switch-off', function () {
+
+            let status = 1;
+
+            var location_id = $(this).data("id");
+            var url = "{{ route('admin.locations.status', ':id') }}";
+            url = url.replace(':id', location_id);
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                data: { status },
+                success: function (data) {
+
+                    if (data.message) {
+                        toastr["info"](data.message);
+                    }
+
+                    table.draw();
+                },
+                error: function (data) {
+
+                    if(data.responseJSON.error){
+                        toastr["error"](data.responseJSON.error);
+                    }
+                    else {
+                        toastr["error"]('Something went wrong, please refresh webpage and try again, if still problem persist contact with administrator');
+                    }
+
+                }
+            });
+
+
+        });
+
+        $('body').on('click','.switch-on', function () {
+
+            let status = 0;
+
+            var location_id = $(this).data("id");
+            var url = "{{ route('admin.locations.status', ':id') }}";
+            url = url.replace(':id', location_id);
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                data: { status },
+                success: function (data) {
+
+                    if (data.message) {
+                        toastr["info"](data.message);
+                    }
+
+                    table.draw();
+                },
+                error: function (data) {
+
+                    if(data.responseJSON.error){
+                        toastr["error"](data.responseJSON.error);
+                    }
+                    else {
+                        toastr["error"]('Something went wrong, please refresh webpage and try again, if still problem persist contact with administrator');
+                    }
+
+                }
+            });
+
+
+        });
 
     });
 

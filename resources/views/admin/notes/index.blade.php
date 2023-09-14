@@ -51,7 +51,7 @@
                   </div>
 
                 </div>
-              </div>
+            </div>
 
             <div class="table-responsive">
             <table id="notes-table" class="table mt-3 table-striped text-center" style="width:100%">
@@ -90,7 +90,7 @@
             processing: true,
             serverSide: true,
             ajax: {
-                url: "{{ route('admin.notes.index') }}",
+
                 data: function (d) {
 
                     d.location = $('#location').val(),

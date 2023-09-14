@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Profile\UpdateRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -25,12 +26,12 @@ class DashboardController extends Controller
         return view('admin.profile.edit', compact('user'));
     }
 
-    public function updateProfile(UpdateRequest $request)
+    public function updateProfile(UpdateRequest $request, $userId)
     {
         $request->validated();
         $oldPassword = $request->old_password;
 
-        $user = auth()->user();
+        $user = User::find($userId);
 
         if ($request->password == null) {
 

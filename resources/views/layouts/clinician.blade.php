@@ -5,13 +5,13 @@
     <title>@yield('title') | {{ config('app.name') }}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="csrf_token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap">
     <link rel="stylesheet" href="{{ asset('assets/clinician/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/clinician/css/style.css') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="shuffle-for-bootstrap.png">
-
+    @yield('css')
 </head>
 
 <body>
@@ -70,8 +70,6 @@
                                 </li>
 
 
-
-
                             </ul>
                             <ul class="navbar-nav me-6 ms-auto"></ul>
                             <div>
@@ -87,8 +85,8 @@
                     <div class="px-6 pb-6 position-relative border-bottom border-secondary-light">
                         <div class="d-inline-flex align-items-center">
                             <a href="#">
-                                <img class="img-fluid" src="artemis-assets/logos/artemis-logo-light.svg" alt=""
-                                    width="auto"></a>
+                                {{-- <img class="img-fluid" src="artemis-assets/logos/artemis-logo-light.svg" alt=""
+                                    width="auto"></a> --}}
                         </div>
                     </div>
                     <div class="py-6 px-6">
@@ -157,15 +155,13 @@
 
         @yield('content')
 
-        <script src="{{ asset('assets/clinician/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('assets/clinician/js/app.js') }}"></script>
-
-        <script src="{{ asset('assets/clinician/js/main.js') }}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-
         <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-            crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        crossorigin="anonymous"></script>
+        <script src="{{ asset('assets/clinician/js/bootstrap.min.js') }}"></script>
+        {{-- <script src="{{ asset('assets/clinician/js/app.js') }}"></script> --}}
+
+        @yield('scripts')
+        <script src="{{ asset('assets/clinician/js/main.js') }}"></script>
 </body>
 
 </html>

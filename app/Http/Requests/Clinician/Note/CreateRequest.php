@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin\Profile;
+namespace App\Http\Requests\Clinician\Note;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
+class CreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,8 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'unique:users,email,'.$this->id],
-            'old_password' => ['nullable'],
-            'password' => ['nullable', 'confirmed', 'min:6'],
-            'password_confirmation' => ['same:password']
+            'note_status' => ['required', 'integer'],
+            'status_reason' => ['nullable', 'string', 'max:30000']
         ];
     }
 }
