@@ -3,6 +3,7 @@
 @section('title', 'Locations')
 
 @section('css')
+<link rel="stylesheet" href="{{ asset('assets/admin/css/common.css') }}">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
 <link href="{{ asset('assets/admin/plugins/select2/css/select2.min.css') }}" rel="stylesheet" />
 @endsection

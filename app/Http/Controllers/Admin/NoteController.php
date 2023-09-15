@@ -122,8 +122,8 @@ class NoteController extends Controller
      */
     public function create()
     {
-        $locations = Location::with(['clinicians'])->get();
-        $clinicians = User::with(['locations'])->clinicians()->get();
+        $locations = Location::with(['clinicians'])->active()->get();
+        $clinicians = User::with(['locations'])->clinicians()->active()->get();
         $errorTypes = ErrorType::active()->get();
 
         return view('admin.notes.create', compact('locations', 'clinicians', 'errorTypes'));

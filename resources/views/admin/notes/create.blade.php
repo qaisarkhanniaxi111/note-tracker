@@ -4,6 +4,7 @@
 
 @section('css')
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('assets/admin/css/common.css') }}">
 @endsection
 
 @section('content')
@@ -115,7 +116,7 @@
 
                         <div class="row mb-3">
                             <div class="col">
-                                <label>Comment</label> <span style="opacity: 0.5"><small>Optional</small></span>
+                                <label>Comment</label> <span style="opacity: 0.9"><small>(Optional)</small></span>
                                 <textarea id="comment" name="comment" cols="10" rows="3" class="form-control"
                                     placeholder="Enter comment here...">{{ old('comment', isset($note) ? $note->comment: '') }}</textarea>
                             </div>
