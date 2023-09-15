@@ -32,13 +32,10 @@ class ClinicianController extends Controller
                 ->addColumn('status', function($row){
                     $status = null;
 
-                    if ($row->status == User::DISABLED) {
-
+                    if ($row->email_verified_at == null) {
                         $status = '<span class="badge badge-danger"><i class="fas fa-ban"></i></span>';
-
-                        // $status = '<span class="badge badge-warning">No</span>';
                     }
-                    else if ($row->status == User::ACTIVE) {
+                    else if ($row->email_verified_at != null) {
                         $status = '<span class="badge badge-success"><i class="fa-solid fa-check"></i></span>';
                     }
 
@@ -66,6 +63,7 @@ class ClinicianController extends Controller
         if ($request->clinician_id) {
 
             $clinician = User::find($request->clinician_id);
+
             $clinicians = User::where('email', '!=', $clinician->email)->get();
 
             $clinicianEmails = $clinicians->map(function($clinician) {
@@ -89,7 +87,7 @@ class ClinicianController extends Controller
                 $clinician->update([
                     'name' => $request->name,
                     'email' => $request->email,
-                    'status' => $request->status,
+                    'email_verified_at' => $request->status == 1 ? now() : null,
                 ]);
             }
             catch(\Exception $ex) {
@@ -115,7 +113,7 @@ class ClinicianController extends Controller
                 User::create([
                     'name' => $request->name,
                     'email' => $request->email,
-                    'status' => $request->status,
+                    'email_verified_at' => $request->status == 1 ? now() : null,
                     'password' => Hash::make(config('notetracker.clinician.default_password'))
                 ]);
 
@@ -147,9 +145,10 @@ class ClinicianController extends Controller
 
         return response()->json([
             'clinician' => [
+                'id' => $clinician->id,
                 'name' => $clinician->name,
                 'email' => $clinician->email,
-                'status' => $clinician->status == 1 ? '<span class="badge badge-success"><i class="fa-solid fa-check"></i></span>': '<span class="badge badge-danger"><i class="fas fa-ban"></i></span>' ,
+                'status' => $clinician->email_verified_at != null ? '<span class="badge badge-success"><i class="fa-solid fa-check"></i></span>': '<span class="badge badge-danger"><i class="fas fa-ban"></i></span>' ,
             ]
         ], 201);
     }
@@ -168,7 +167,12 @@ class ClinicianController extends Controller
         }
 
         return response()->json([
-            'clinician' => $clinician
+            'clinician' => [
+                'id' => $clinician->id,
+                'name' => $clinician->name,
+                'email' => $clinician->email,
+                'status' => $clinician->email_verified_at != null ? 1: 0,
+            ]
         ], 201);
     }
 
@@ -188,7 +192,7 @@ class ClinicianController extends Controller
 
         try {
 
-            if ($clinician->locations) {
+            if (count($clinician->locations) > 0) {
                 return response()->json([
                     'error' => 'Clinician is linked with location, so first remove the clinician from the location and perform the action'
                 ], 401);
@@ -204,6 +208,15 @@ class ClinicianController extends Controller
 
         return response()->json([
             'message' => 'Clinician removed successfully'
+        ], 201);
+    }
+
+    public function loadActiveClinicians()
+    {
+        $clinicians = User::clinicians()->active()->get();
+
+        return response()->json([
+            'clinicians' => $clinicians
         ], 201);
     }
 }

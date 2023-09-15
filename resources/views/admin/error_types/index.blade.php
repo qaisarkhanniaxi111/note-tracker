@@ -225,7 +225,7 @@
                 dataType: 'json',
                 success: function (response) {
                     $('#ajaxerrorTypeFormModal').modal('show');
-                    $('.errorTypeFormModalHeading').html("Edit Error Type");
+                    $('#errorTypeFormModalHeading').html("Edit Error Type");
 
                     if (response.error) {
                         $('#error_type_id').val(response.error.id);
@@ -291,7 +291,7 @@
             $("#error_type_id").val('');
             $('#ajaxerrorTypeFormModal').modal('show');
             $('#errorTypeSaveBtn').html("Save");
-            $('#errorTypeFormModalHeading').html("New ErrorType");
+            $('#errorTypeFormModalHeading').html("New Error Type");
             $('.error_msgs').html('');
             $('#errorTypeSaveBtn').attr('disabled', false);
             $('#errorType_form').trigger("reset");

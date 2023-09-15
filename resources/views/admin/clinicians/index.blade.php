@@ -241,7 +241,7 @@
                 dataType: 'json',
                 success: function (response) {
                     $('#ajaxclinicianFormModal').modal('show');
-                    $('.clinicianFormModalHeading').html("Edit Clinician");
+                    $('#clinicianFormModalHeading').html("Edit Clinician");
 
                     if (response.clinician) {
                         $('#clinician_id').val(response.clinician.id);

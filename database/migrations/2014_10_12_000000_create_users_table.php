@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->tinyInteger('role')->default(0);
-            $table->boolean('status')->default(0); // 0 mean disable and 1 mean active
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

@@ -17,8 +17,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public const ADMIN = 1;
     public const CLINICIAN = 0;
-    public const ACTIVE = 1;
-    public const DISABLED = 0;
 
     /**
      * The attributes that are mass assignable.
@@ -29,7 +27,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'status'
+        'status',
+        'email_verified_at'
     ];
 
     /**
@@ -69,7 +68,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function locations()
     {
-        return $this->belongsToMany(Location::class, 'clinician_location', 'location_id', 'clinician_id');
+        return $this->belongsToMany(Location::class, 'clinician_location', 'clinician_id', 'location_id');
     }
 
     public function notes()

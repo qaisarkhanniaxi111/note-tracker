@@ -30,6 +30,16 @@
 
                     <h4 class="text-dark mb-6 text-center">Sign Up</h4>
 
+                    <div class="form-group row {{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }} ">
+                        <div class="col-md-12" style="">
+                            @if ($errors->has('g-recaptcha-response'))
+                                <span class="help-block">
+                                    <strong class="text-danger">{{ $errors->first('g-recaptcha-response') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
                       <div class="row">
@@ -73,6 +83,9 @@
 
                           </div>
 
+                          <!-- Google Recaptcha -->
+                          <div class="g-recaptcha mt-4" data-sitekey={{config('notetracker.recaptcha.key')}}></div><br>
+
                           <button type="submit" class="btn btn-primary btn-pill mb-4">Sign Up</button>
 
 
@@ -89,5 +102,7 @@
           </div>
         </div>
 
+    <script async src="https://www.google.com/recaptcha/api.js">
+    <script></script>
 </body>
 </html>

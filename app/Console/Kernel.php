@@ -12,8 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('clinician:not-fixed-notes')->mondays()->at('05:00');
-        // $schedule->command('location:not-fixed-notes')->mondays()->at('05:00');
+        // $schedule->command('clinician:not-fixed-notes')->mondays()->at('08:00');
+        // $schedule->command('location:not-fixed-notes')->mondays()->at('08:00');
 
 
         // what's the timezone we need to setup

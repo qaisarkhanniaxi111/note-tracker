@@ -55,9 +55,9 @@
                             <div class="col">
                                 <label class="text-dark font-weight-medium">Clinicians <span style="opacity: 0.5; font-size: 12px">(Optional)</span></label>
                                 <select name="clinicians[]" class="js-example-basic-multiple select2_example form-control" multiple="multiple">
-                                    @foreach ($clinicians as $clinician)
+                                    {{-- @foreach ($clinicians as $clinician)
                                         <option value="{{ $clinician->id }}">{{ $clinician->name }}</option>
-                                    @endforeach
+                                    @endforeach --}}
                                 </select>
                                 <span id="clinicianError" class="error_msgs text-danger"></span>
                             </div>
@@ -276,7 +276,7 @@
                 dataType: 'json',
                 success: function (response) {
                     $('#ajaxlocationFormModal').modal('show');
-                    $('.locationFormModalHeading').html("Edit Location");
+                    $('#locationFormModalHeading').html("Edit Location");
 
                     if (response.location) {
                         $('#location_id').val(response.location.id);
@@ -288,6 +288,23 @@
                     if (response.clinicians) {
 
                         var options = [];
+                        var activeOptions = [];
+                        $('.select2_example').empty().trigger('change');
+
+                        var activeClinicians = JSON.parse(loadActiveClinicians());
+
+                        $.each(activeClinicians, function(indexs, items) {
+
+                            $.each(items, function(index, item) {
+
+                                $(".select2_example option[value="+item.id+"]").remove();
+
+                                activeOptions = $("<option></option>").val(item.id).text(item.name);
+
+                                $('.select2_example').append(activeOptions).trigger('change');
+                            });
+
+                        });
 
                         $.each(response.clinicians, function(index, item) {
 
@@ -364,7 +381,24 @@
             $('#locationSaveBtn').attr('disabled', false);
             $('#location_form').trigger("reset");
 
-            $('.select2_example').val(null).trigger("change");
+            $('.select2_example').empty().trigger('change');
+
+            var options = [];
+
+            var activeClinicians = JSON.parse(loadActiveClinicians());
+
+            $.each(activeClinicians, function(indexs, items) {
+
+                $.each(items, function(index, item) {
+
+                    $(".select2_example option[value="+item.id+"]").remove();
+
+                    options = $("<option></option>").val(item.id).text(item.name);
+
+                    $('.select2_example').append(options).trigger('change');
+                });
+
+            });
         });
 
         $('body').on('click', '.editButton', function () {
@@ -375,6 +409,7 @@
             console.log('lcos')
             $('.error_msgs').html('');
             $("#status option").attr("selected", false);
+            $(".select2_example").attr("selected", false);
         });
 
         // Location change status
@@ -447,6 +482,34 @@
 
 
         });
+
+        function loadActiveClinicians()
+        {
+            var response = $.ajax({
+                async: false,
+                url: "{{ route('admin.cinicians.active') }}",
+                type: "GET",
+                dataType: 'json',
+                success: function (response) {
+
+                    // console.log(response)
+
+                },
+                error: function (data) {
+
+                    if(data.responseJSON.error){
+                        toastr['error'](data.responseJSON.error);
+                    }
+                    else {
+                        toastr['error']('Something went wrong, please refresh webpage and try again.');
+                    }
+
+                }
+            }).responseText;
+
+            return response;
+
+        }
 
     });
 

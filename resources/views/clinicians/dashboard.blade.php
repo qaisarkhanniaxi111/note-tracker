@@ -103,22 +103,26 @@
                 </div>
             </div>
 
-            <table id="notes-table" class="table mb-0 table-borderless table-striped small text-center">
-                <thead>
-                    <tr class="text-secondary">
-                        <th class="pt-4 pb-3 px-6">Date of Service</th>
-                        <th class="pt-4 pb-3 px-6">Location</th>
-                        <th class="pt-4 pb-3 px-6">Patient</th>
-                        <th class="pt-4 pb-3 px-6">Status</th>
-                        <th class="pt-4 pb-3 px-6">Status Reason</th>
-                        <th class="pt-4 pb-3 px-6">Comment</th>
-                        <th class="pt-4 pb-3 px-6">Error Type</th>
-                        <th class="pt-4 pb-3 px-6">Actions</th>
-                </thead>
-                <tbody>
+            <div class="row">
+                <div class="col-12">
+                    <table id="notes-table" class="table mb-0 table-borderless table-striped small text-center">
+                        <thead>
+                            <tr class="text-secondary">
+                                <th class="pt-4 pb-3 px-6">Date of Service</th>
+                                <th class="pt-4 pb-3 px-6">Location</th>
+                                <th class="pt-4 pb-3 px-6">Patient</th>
+                                <th class="pt-4 pb-3 px-6">Status</th>
+                                <th class="pt-4 pb-3 px-6">Status Reason</th>
+                                <th class="pt-4 pb-3 px-6">Comment</th>
+                                <th class="pt-4 pb-3 px-6">Error Type</th>
+                                <th class="pt-4 pb-3 px-6">Actions</th>
+                        </thead>
+                        <tbody>
 
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
         </div>
     </section>

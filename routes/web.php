@@ -36,6 +36,8 @@ Route::middleware(['auth', 'verified'])->group(function() {
 
         Route::get('locations/{location_id}/status', [LocationController::class, 'changeLocationStatus'])->name('locations.status');
         Route::resource('locations', LocationController::class)->except('create', 'update');
+
+        Route::get('clinicians/active', [ClinicianController::class, 'loadActiveClinicians'])->name('cinicians.active');
         Route::resource('clinicians', ClinicianController::class)->except('create', 'update');
         Route::resource('error_types', ErrorTypeController::class)->except('create', 'update');
         Route::resource('notes', NoteController::class);

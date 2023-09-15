@@ -22,31 +22,33 @@ class NoteController extends Controller
      */
     public function index(Request $request)
     {
+        $user = auth()->user();
+
         $locations = Location::with(['clinicians'])->get();
         $clinicians = User::with(['locations'])->clinicians()->active()->get();
 
-        $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->get();
+        $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->where('clinician_id', $user->id)->get();
 
         if ($request->ajax()) {
 
             if ($request->location) {
-                $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->where('location_id', $request->location)->get();
+                $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->where('location_id', $request->location)->where('clinician_id', $user->id)->get();
             }
 
             if ($request->clinician) {
-                $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->where('clinician_id', $request->clinician)->get();
+                $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->where('clinician_id', $request->clinician)->where('clinician_id', $user->id)->get();
             }
 
             if ($request->status) {
-                $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->where('status', $request->status)->get();
+                $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->where('status', $request->status)->where('clinician_id', $user->id)->get();
             }
 
             elseif ($request->status === null) {
-                $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->get();
+                $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->where('clinician_id', $user->id)->get();
             }
 
             elseif ($request->status == Note::NOT_FIXED) {
-                $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->where('status', $request->status)->get();
+                $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->where('status', $request->status)->where('clinician_id', $user->id)->get();
             }
 
             return Datatables::of($notes)
@@ -97,8 +99,7 @@ class NoteController extends Controller
                     return Str::limit($row->status_reason, 20);
                 })
                 ->addColumn('action', function($row){
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" title="Show" class="btn btn-sm btn-success view showButton"> <i class="fas fa-eye"></i> </a>
-                    <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" title="Edit" class="btn btn-sm btn-primary edit editButton"> <i class="fas fa-edit"></i> </a>';
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" title="Edit" class="btn btn-sm btn-primary edit editButton"> <i class="fas fa-edit"></i> </a>';
                     return $btn;
                 })
                 ->rawColumns(['action', 'status', 'checkbox'])
@@ -128,8 +129,6 @@ class NoteController extends Controller
      */
     public function store(CreateRequest $request)
     {
-        $notFixedCounts = Note::where('clinician_id', auth()->id())->where('status', Note::NOT_FIXED)->count();
-
         if ($request->note_id) {
 
             $note = Note::find($request->note_id);
@@ -157,6 +156,8 @@ class NoteController extends Controller
                 }
 
                 $this->sendStatusUpdateMail($request->note_status, $noteOldStatus, $note);
+                $notFixedCounts = Note::where('clinician_id', auth()->id())->where('status', Note::NOT_FIXED)->count();
+
 
             }
             catch(\Exception $ex) {

@@ -82,6 +82,9 @@ class NoteController extends Controller
                     }
                     return Str::limit($errorTypeName, 20);
                 })
+                ->addColumn('date_of_service', function($row){
+                    return date('m-d-Y', strtotime($row->date_of_service));
+                })
                 ->addColumn('status', function($row){
                     $status = null;
 

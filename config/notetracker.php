@@ -12,4 +12,9 @@ return [
         'name' => env('COPY_RIGHT_OWNER_NAME'),
         'website' => env('COPY_RIGHT_OWNER_WEBSITE')
     ],
+
+    'recaptcha' => [
+        'key' => env('GOOGLE_SITE_KEY'),
+        'secret' => env('GOOGLE_SITE_SECRET')
+    ]
 ];
