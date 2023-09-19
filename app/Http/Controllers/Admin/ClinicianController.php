@@ -198,6 +198,12 @@ class ClinicianController extends Controller
                 ], 401);
             }
 
+            if (count($clinician->notes) > 0) {
+                return response()->json([
+                    'error' => 'Clinician is linked with note, so first remove the clinician from the note and perform the action'
+                ], 401);
+            }
+
             $clinician->delete();
         }
         catch(\Exception $ex) {
