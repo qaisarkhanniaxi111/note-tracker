@@ -78,14 +78,14 @@
                         @endforeach
                     </select>
                   </div>
-                  <div class="col-sm">
+                  {{-- <div class="col-sm">
                     <select name="clinician" id="clinician" class="form-control">
                         <option value="" selected>Choose Clinician</option>
                         @foreach ($clinicians as $clinician)
                             <option value="{{ $clinician->id }}">{{ $clinician->name }}</option>
                         @endforeach
                     </select>
-                  </div>
+                  </div> --}}
                   <div class="col-sm">
                     <select name="status" id="status" class="form-control">
                         <option value="">Choose Status</option>

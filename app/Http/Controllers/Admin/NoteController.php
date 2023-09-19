@@ -23,29 +23,31 @@ class NoteController extends Controller
         $locations = Location::with(['clinicians'])->get();
         $clinicians = User::with(['locations'])->clinicians()->active()->get();
 
-        $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->get();
+        $notes = Note::query()->with(['location', 'clinician', 'patient', 'errorType']);
 
         if ($request->ajax()) {
 
             if ($request->location) {
-                $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->where('location_id', $request->location)->get();
+                $notes->where('location_id', $request->location);
             }
 
             if ($request->clinician) {
-                $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->where('clinician_id', $request->clinician)->get();
+                $notes->where('clinician_id', $request->clinician);
             }
 
-            if ($request->status) {
-                $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->where('status', $request->status)->get();
+            if ($request->status != 'something') {
+                $notes->where('status', $request->status);
             }
 
-            elseif ($request->status === null) {
-                $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->get();
+            if ($request->status == Note::NOT_FIXED) {
+                $notes->where('status', $request->status);
             }
 
-            elseif ($request->status == Note::NOT_FIXED) {
-                $notes = Note::with(['location', 'clinician', 'patient', 'errorType'])->where('status', $request->status)->get();
+            else if ($request->status === 'something') {
+                $notes;
             }
+
+            $notes->get();
 
             return Datatables::of($notes)
                 ->addIndexColumn()

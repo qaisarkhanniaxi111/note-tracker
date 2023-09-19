@@ -38,7 +38,7 @@
                   </div>
                   <div class="col-sm">
                     <select name="status" id="status" class="form-control">
-                        <option value="" selected>Choose Status</option>
+                        <option value="something" selected>Choose Status</option>
                         <option value="{{ \App\Models\Note::NOT_FIXED }}">Not Fixed</option>
                         <option value="{{ \App\Models\Note::FIXED }}">Fixed</option>
                         <option value="{{ \App\Models\Note::CONTACT_ME }}">Contact me</option>

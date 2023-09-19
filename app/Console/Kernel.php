@@ -17,7 +17,9 @@ class Kernel extends ConsoleKernel
 
 
         // what's the timezone we need to setup
-        $schedule->command('location:not-fixed-notes')->thursdays()->at('12:07');
+        // $schedule->command('location:not-fixed-notes')->thursdays()->at('12:07');
+
+        $schedule->command('clinician:not-fixed-notes')->everyMinute();
     }
 
     /**
