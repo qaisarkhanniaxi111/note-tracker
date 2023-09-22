@@ -37,7 +37,7 @@
 			<div id="sidebar" class="sidebar sidebar-with-footer">
 				<!-- Aplication Brand -->
 				<div class="app-brand">
-					<a href="{{ route('admin.notes.index') }}"> <img src="{{ asset('assets/general/img/logo.jpg') }}" style="width: 50px;  border-radius: 50%" alt="QK Creators"> <span class="brand-name"><h2 class="text-white"><small>{{ config('app.name') }}</small></h2></span> </a>
+					<a href="{{ route('admin.notes.index') }}"> <img src="{{ asset('assets/general/img/logo.png') }}" style="width: 50px" alt="{{ config('app.name') }}"> <span class="brand-name"><h2 class="text-white"><small>{{ config('app.name') }}</small></h2></span> </a>
 				</div>
 				<!-- begin sidebar scrollbar -->
 				<div class="sidebar-left" data-simplebar style="height: 100%;">

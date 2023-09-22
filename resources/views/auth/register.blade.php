@@ -22,7 +22,7 @@
                   <div class="card-header pb-0">
                     <div class="app-brand w-100 d-flex justify-content-center border-bottom-0">
                       <a class="w-auto pl-0" href="{{ route('site.home') }}">
-                        <img src="{{ asset('assets/general/img/logo.jpg') }}" alt="qk creators logo" style="width: 70px; border-radius: 50%">
+                        <img src="{{ asset('assets/general/img/logo.png') }}" alt="qk creators logo" style="width: 70px; border-radius: 50%">
                       </a>
                     </div>
                   </div>
