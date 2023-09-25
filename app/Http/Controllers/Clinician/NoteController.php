@@ -176,7 +176,7 @@ class NoteController extends Controller
 
     public function sendStatusUpdateMail($requestStatus, $noteStatus, $note)
     {
-        $admin = User::admins()->first();
+        $adminEmail = config('notetracker.admin_contact_mail');
         $status = $note->status;
 
         if ($status == Note::NOT_FIXED) {
@@ -200,7 +200,7 @@ class NoteController extends Controller
         ];
 
         if ($requestStatus != $noteStatus) {
-            Mail::to($admin->email)->send(new NoteStatusMail($data));
+            Mail::to($adminEmail)->send(new NoteStatusMail($data));
         }
     }
 

@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Clinician\CreateRequest;
+use App\Mail\RegistrationMail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class ClinicianController extends Controller
@@ -110,12 +112,25 @@ class ClinicianController extends Controller
 
             try {
 
-                User::create([
+                $randomPassword = rand(10, 99). Str::random(6);
+
+                $user = User::create([
                     'name' => $request->name,
                     'email' => $request->email,
                     'email_verified_at' => $request->status == 1 ? now() : null,
-                    'password' => Hash::make(config('notetracker.clinician.default_password'))
+                    'password' => Hash::make($randomPassword)
                 ]);
+
+                if ($user) {
+
+                    $data = [
+                        'name' => $user->name,
+                        'email' => $user->email,
+                        'password' => $randomPassword,
+                    ];
+
+                    Mail::to($user->email)->send(new RegistrationMail($data));
+                }
 
             }
             catch(\Exception $ex) {

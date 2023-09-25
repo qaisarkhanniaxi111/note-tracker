@@ -25,7 +25,8 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'welcome')->name('site.home');
 
 Auth::routes([
-    'verify' => true
+    'verify' => true,
+    'register' => false
 ]);
 
 Route::middleware(['auth', 'verified'])->group(function() {

@@ -94,9 +94,9 @@
                                         <button type="submit" class="btn btn-primary btn-pill mb-4">Sign In</button>
 
 
-                                        <p>Don't have an account yet ?
+                                        {{-- <p>Don't have an account yet ?
                                             <a class="text-blue" href="{{ route('register') }}">Sign Up</a>
-                                        </p>
+                                        </p> --}}
                                     </div>
                                 </div>
                             </form>

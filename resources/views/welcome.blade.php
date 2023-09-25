@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Note Tracker Homepage</title>
+    <title>{{ config('app.name') }} | Home</title>
+    <link href="{{ asset('assets/general/img/logo.png') }}" rel="shortcut icon" />
     <link rel="stylesheet" href="{{ asset('assets/site/vendors/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/site/css/style.css') }}">
 </head>

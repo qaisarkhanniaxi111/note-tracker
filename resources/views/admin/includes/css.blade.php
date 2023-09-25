@@ -10,7 +10,7 @@
 <!-- notification css cdn  -->
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/admin/plugins/toaster/toastr.min.css') }}">
 <!-- FAVICON -->
-<link href="{{ asset('assets/admin/images/favicon.png') }}" rel="shortcut icon" />
+<link href="{{ asset('assets/general/img/logo.png') }}" rel="shortcut icon" />
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="{{ asset('assets/admin/plugins/nprogress/nprogress.js') }}"></script>
 	<!-- Icons -->

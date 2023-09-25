@@ -5,8 +5,8 @@ namespace App\Console\Commands;
 use App\Mail\NotFixedClinicianNoteMail;
 use App\Models\Note;
 use App\Models\User;
-use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Console\Command;
 
 class NotFixedClinicianNoteCommand extends Command
 {

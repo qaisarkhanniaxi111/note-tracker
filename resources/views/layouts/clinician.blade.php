@@ -21,9 +21,9 @@
             <nav class="navbar navbar-expand-xl navbar-light bg-white flex-wrap">
                 <div class="container-fluid">
                     <div class="d-flex w-100 align-items-center">
-                        <a class="navbar-brand" href="#">
-                            <img class="img-fluid imga" src="{{ asset('assets/clinician/img/cars.jpeg') }}"
-                                alt="" width="auto"></a>
+                        <a class="navbar-brand" href="{{ route('clinician.dashboard') }}">
+                            <img class="img-fluid imga" src="{{ asset('assets/general/img/logo.png') }}"
+                                alt="" width="auto" style="width: 150px !important"></a>
                         <button class="navbar-burger navbar-toggler bg-primary-light ms-auto" type="button">
                             <span class="navbar-toggler-icon"></span>
                         </button>
